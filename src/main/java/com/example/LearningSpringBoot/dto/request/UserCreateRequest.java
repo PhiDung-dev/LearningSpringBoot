@@ -1,10 +1,14 @@
 package com.example.LearningSpringBoot.dto.request;
 
+import jakarta.validation.constraints.Size;
+
 import java.time.LocalDate;
 
 public class UserCreateRequest {
 
+    @Size(min=6, message = "username must be at least 6 characters")
     private String username;
+    @Size(min=8, message = "password must be at least 8 characters")
     private String password;
     private String firstName;
     private String lastName;

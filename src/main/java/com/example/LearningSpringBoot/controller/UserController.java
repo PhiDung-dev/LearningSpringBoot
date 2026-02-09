@@ -4,6 +4,7 @@ import com.example.LearningSpringBoot.dto.request.UserCreateRequest;
 import com.example.LearningSpringBoot.dto.request.UserUpdateRequest;
 import com.example.LearningSpringBoot.entity.User;
 import com.example.LearningSpringBoot.service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,7 +18,7 @@ public class UserController {
     UserService userService;
 
     @PostMapping
-    User createUser(@RequestBody UserCreateRequest request){
+    User createUser(@RequestBody @Valid UserCreateRequest request){
         return userService.createUser(request);
     }
 
@@ -32,7 +33,7 @@ public class UserController {
     }
 
     @PutMapping("/{userId}")
-    User updateUser (@RequestBody UserUpdateRequest request, @PathVariable("userId") String id) {
+    User updateUser (@RequestBody @Valid UserUpdateRequest request, @PathVariable("userId") String id) {
         return userService.updateUser(request, id);
     }
 
