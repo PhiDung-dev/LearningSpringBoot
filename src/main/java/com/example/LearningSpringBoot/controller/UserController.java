@@ -1,5 +1,6 @@
 package com.example.LearningSpringBoot.controller;
 
+import com.example.LearningSpringBoot.dto.request.ApiResponse;
 import com.example.LearningSpringBoot.dto.request.UserCreateRequest;
 import com.example.LearningSpringBoot.dto.request.UserUpdateRequest;
 import com.example.LearningSpringBoot.entity.User;
@@ -18,8 +19,10 @@ public class UserController {
     UserService userService;
 
     @PostMapping
-    User createUser(@RequestBody @Valid UserCreateRequest request){
-        return userService.createUser(request);
+    ApiResponse<User> createUser(@RequestBody @Valid UserCreateRequest request){
+        ApiResponse<User> apiResponse = new ApiResponse<>();
+        apiResponse.setResult(userService.createUser(request));
+        return apiResponse;
     }
 
     @GetMapping

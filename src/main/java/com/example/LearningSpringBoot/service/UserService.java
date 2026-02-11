@@ -15,6 +15,9 @@ public class UserService {
     UserRepository userRepository;
 
     public User createUser(UserCreateRequest request){
+        if (userRepository.existsByUsername(request.getUsername())){
+            throw new RuntimeException("username is existed");
+        }
         User user = new User();
         user.setUsername(request.getUsername());
         user.setPassword(request.getPassword());
@@ -29,10 +32,16 @@ public class UserService {
     }
 
     public User readUser(String id) {
+        if(!userRepository.existsById(id)) {
+            throw new RuntimeException("id is existed");
+        }
         return userRepository.findById(id).orElseThrow(() -> new RuntimeException("user not found"));
     }
 
     public User updateUser(UserUpdateRequest request, String id) {
+        if(!userRepository.existsById(id)){
+            throw new RuntimeException("id is existed");
+        }
         User user = readUser(id);
         user.setPassword(request.getPassword());
         user.setFirstName(request.getFirstName());
@@ -42,6 +51,9 @@ public class UserService {
     }
 
     public void deleteUser(String id){
+        if(!userRepository.existsById(id)){
+            throw new RuntimeException("id is existed");
+        }
         userRepository.deleteById(id);
     }
 }
